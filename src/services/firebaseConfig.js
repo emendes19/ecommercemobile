@@ -1,8 +1,8 @@
-// src/services/firebaseConfig.js (ALTERADO)
+// src/services/firebaseConfig.js (VERSÃO FINAL SEM ADDPRODUCT)
 
 import * as firebase from 'firebase/app';
-// Adicionar doc, deleteDoc e serverTimestamp
-import { getFirestore, collection, addDoc, serverTimestamp, doc, deleteDoc, query } from 'firebase/firestore'; 
+// serverTimestamp é removido se não for usado em addToCart
+import { getFirestore, collection, addDoc, serverTimestamp, doc, deleteDoc } from 'firebase/firestore'; 
 
 // 1. Configuração do seu Projeto Firebase
 const firebaseConfig = {
@@ -26,33 +26,40 @@ if (!firebase.getApps().length) {
 export const db = getFirestore(app);
 
 // ----------------------------------------------------
-// NOVO: Função para Adicionar Produto à Loja
+// REMOVIDA A FUNÇÃO addProduct
 // ----------------------------------------------------
-export const addProduct = async (productData) => {
+
+export const addToCart = async (productData) => {
   try {
-    const produtosRef = collection(db, 'produtos');
+    const carrinhoRef = collection(db, 'carrinho');
     
-    // Adiciona o produto com um timestamp de criação
-    await addDoc(produtosRef, {
-      ...productData,
-      createdAt: serverTimestamp(),
+    // Adiciona o documento
+    await addDoc(carrinhoRef, {
+      productId: productData.id,
+      name: productData.title,
+      price: productData.price,
+      // Usando serverTimestamp para registro do tempo
+      timestamp: serverTimestamp(),
     });
 
-    console.log(`Novo produto adicionado: ${productData.title}`);
+    console.log(`Produto ${productData.id} adicionado ao Firestore!`);
     return true;
   } catch (error) {
-    console.error("Erro ao adicionar novo produto: ", error);
+    console.error("Erro ao adicionar no Firestore: ", error);
     return false;
   }
 };
 
-// ----------------------------------------------------
-// EXISTENTE: Funções do Carrinho
-// ----------------------------------------------------
-export const addToCart = async (productData) => {
-  // ... (código da função existente) ...
-};
-
 export const removeFromCart = async (itemId) => {
-  // ... (código da função existente) ...
+  try {
+    const docRef = doc(db, 'carrinho', itemId);
+    await deleteDoc(docRef);
+
+    console.log(`Produto ${itemId} removido do Firestore!`);
+    return true;
+  } catch (error) {
+    console.error("Erro ao remover do Firestore: ", error);
+    alert("Erro: Não foi possível remover o item do carrinho. Verifique as permissões (Regras de Segurança).");
+    return false;
+  }
 };
