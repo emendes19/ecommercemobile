@@ -1,16 +1,18 @@
-// src/services/firebaseConfig.js (Código Completo Atualizado)
+// src/services/firebaseConfig.js (ALTERADO)
 
 import * as firebase from 'firebase/app';
-// IMPORTANTE: Adicionar deleteDoc
-import { getFirestore, collection, addDoc, serverTimestamp, doc, deleteDoc } from 'firebase/firestore'; 
+// Adicionar doc, deleteDoc e serverTimestamp
+import { getFirestore, collection, addDoc, serverTimestamp, doc, deleteDoc, query } from 'firebase/firestore'; 
 
 // 1. Configuração do seu Projeto Firebase
 const firebaseConfig = {
   // ... suas credenciais reais ...
-  apiKey: "SUA_CHAVE_API_AQUI",
+  apiKey: "SUA_CHAVE_API_AQUI", 
   authDomain: "SEU_DOMINIO.firebaseapp.com",
   projectId: "SEU_ID_DO_PROJETO",
-  // ...
+  storageBucket: "SEU_BUCKET.appspot.com",
+  messagingSenderId: "SEU_ID_MESSAGING",
+  appId: "SEU_ID_DO_APP"
 };
 
 // ... (Restante da inicialização) ...
@@ -23,26 +25,34 @@ if (!firebase.getApps().length) {
 
 export const db = getFirestore(app);
 
-// ... (Função addToCart existente) ...
-
-/**
- * Remove um produto da coleção 'carrinho' no Firestore.
- * @param {string} itemId O ID do documento a ser excluído.
- */
-export const removeFromCart = async (itemId) => {
+// ----------------------------------------------------
+// NOVO: Função para Adicionar Produto à Loja
+// ----------------------------------------------------
+export const addProduct = async (productData) => {
   try {
-    // 1. Cria a referência ao documento usando o ID
-    const docRef = doc(db, 'carrinho', itemId);
+    const produtosRef = collection(db, 'produtos');
+    
+    // Adiciona o produto com um timestamp de criação
+    await addDoc(produtosRef, {
+      ...productData,
+      createdAt: serverTimestamp(),
+    });
 
-    // 2. Exclui o documento
-    await deleteDoc(docRef);
-
-    console.log(`Produto ${itemId} removido do Firestore!`);
+    console.log(`Novo produto adicionado: ${productData.title}`);
     return true;
   } catch (error) {
-    console.error("Erro ao remover do Firestore: ", error);
-    // Tratamento de Erro
-    alert("Erro: Não foi possível remover o item do carrinho. Verifique as permissões (Regras de Segurança).");
+    console.error("Erro ao adicionar novo produto: ", error);
     return false;
   }
+};
+
+// ----------------------------------------------------
+// EXISTENTE: Funções do Carrinho
+// ----------------------------------------------------
+export const addToCart = async (productData) => {
+  // ... (código da função existente) ...
+};
+
+export const removeFromCart = async (itemId) => {
+  // ... (código da função existente) ...
 };
