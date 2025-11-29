@@ -1,4 +1,3 @@
-// src/services/ProductService.js
 const API_URL = 'https://fakestoreapi.com';
 
 export const fetchProducts = async () => {

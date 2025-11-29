@@ -1,4 +1,3 @@
-// src/components/ProductCard.js
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 

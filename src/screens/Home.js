@@ -1,18 +1,13 @@
-// src/screens/Home.js (VERSÃO FINAL SEM ADDPRODUCT)
-
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import ProductCard from '../components/ProductCard';
 import { fetchProducts } from '../services/ProductService';
-// Importações de Firebase e onSnapshot NÃO são mais necessárias aqui
 
 const Home = ({ navigation }) => {
   const [products, setProducts] = useState([]); // Apenas produtos da API Externa
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  // const [firebaseProducts, setFirebaseProducts] = useState([]); <-- REMOVIDO
 
-  // Configura o botão do carrinho no cabeçalho
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -21,7 +16,7 @@ const Home = ({ navigation }) => {
           onPress={() => navigation.navigate('Cart')}
         >
           {/* Apenas o Botão para Visualizar Carrinho */}
-          <Text style={{ color: 'white', fontSize: 24 }}>🛒</Text> 
+          <Text style={{ color: 'white', fontSize: 24 }}>Carrinho</Text> 
         </TouchableOpacity>
       ),
     });
@@ -45,11 +40,7 @@ const Home = ({ navigation }) => {
 
     loadApiProducts();
 
-    // Cleanup: Não precisa de unsubscribe do Firebase, mas pode deixar por precaução
-  }, []);
-
-  // Não há mais combinação de produtos; apenas 'products' da API
-  // const combinedProducts = [...firebaseProducts, ...products]; <-- REMOVIDO
+      }, []);
 
   if (loading) {
     return (
@@ -79,7 +70,7 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>✨ Ofertas do Dia</Text>
+      <Text style={styles.header}>Ofertas do Dia</Text>
       <FlatList
         data={products} // Apenas produtos da API
         renderItem={renderItem}

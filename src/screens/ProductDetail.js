@@ -1,5 +1,3 @@
-// src/screens/ProductDetail.js
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { fetchProductById } from '../services/ProductService';

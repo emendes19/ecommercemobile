@@ -1,12 +1,8 @@
-// src/services/firebaseConfig.js (VERSÃO FINAL SEM ADDPRODUCT)
-
 import * as firebase from 'firebase/app';
-// serverTimestamp é removido se não for usado em addToCart
 import { getFirestore, collection, addDoc, serverTimestamp, doc, deleteDoc } from 'firebase/firestore'; 
 
-// 1. Configuração do seu Projeto Firebase
 const firebaseConfig = {
-  // ... suas credenciais reais ...
+  // ... credenciais reais ...
   apiKey: "SUA_CHAVE_API_AQUI", 
   authDomain: "SEU_DOMINIO.firebaseapp.com",
   projectId: "SEU_ID_DO_PROJETO",
@@ -24,10 +20,6 @@ if (!firebase.getApps().length) {
 }
 
 export const db = getFirestore(app);
-
-// ----------------------------------------------------
-// REMOVIDA A FUNÇÃO addProduct
-// ----------------------------------------------------
 
 export const addToCart = async (productData) => {
   try {

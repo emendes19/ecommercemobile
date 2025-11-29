@@ -1,11 +1,8 @@
-// src/navigation/AppNavigator.js (VERSÃO FINAL SEM ADDPRODUCT)
-
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Home';
 import ProductDetail from '../screens/ProductDetail';
 import Cart from '../screens/Cart';
-// import AddProduct from '../screens/AddProduct'; // <-- REMOVIDO
 
 const Stack = createStackNavigator();
 
@@ -23,10 +20,9 @@ const AppNavigator = () => {
         },
       }}
     >
-      <Stack.Screen name="Home" component={Home} options={{ title: '📱 Minha Loja Simples' }} />
+      <Stack.Screen name="Home" component={Home} options={{ title: 'Minha Loja ' }} />
       <Stack.Screen name="DetalheProduto" component={ProductDetail} options={{ title: 'Detalhes do Produto' }} />
-      <Stack.Screen name="Cart" component={Cart} options={{ title: 'Seu Carrinho' }} />
-      {/* <Stack.Screen name="AddProduct" component={AddProduct} options={{ title: 'Adicionar Produto' }} /> <-- REMOVIDO */}
+      <Stack.Screen name="Cart" component={Cart} options={{ title: 'Carrinho' }} />
     </Stack.Navigator>
   );
 };

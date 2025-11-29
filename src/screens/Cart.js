@@ -1,7 +1,5 @@
-// src/screens/Cart.js (Código Completo Atualizado)
-
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'; // <-- Adicionado Alert e TouchableOpacity
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 // Importação do Firebase
 import { db, removeFromCart } from '../services/firebaseConfig'; // <-- Importado removeFromCart
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
@@ -43,7 +41,7 @@ const Cart = () => {
           onPress: async () => {
             const success = await removeFromCart(itemId);
             if (success) {
-                // Não precisa de feedback extra, o onSnapshot já atualiza a lista automaticamente
+                
             }
           },
           style: "destructive"
@@ -80,7 +78,7 @@ const Cart = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>🛒 Seu Carrinho ({cartItems.length} itens)</Text>
+      <Text style={styles.header}>Seu Carrinho ({cartItems.length} itens)</Text>
       {cartItems.length === 0 ? (
         <Text style={styles.emptyText}>Seu carrinho está vazio!</Text>
       ) : (
